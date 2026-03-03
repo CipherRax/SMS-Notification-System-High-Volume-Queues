@@ -1,9 +1,9 @@
-import { smsQueue } from "./queue"
+import { smsQueue } from "./queue.ts"
 
 async function addTestJob() {
   await smsQueue.add("send-sms", {
     phone: "+25410000000",
-    message: "Hello from BullMQ here 🚀",
+    message: "Hello from BullMQ here 🚀👩‍❤️‍👨💯",
   }, {
     attempts: 3,
     backoff: {

@@ -1,4 +1,4 @@
-import { Worker } from "bullmq";
+import { Queue } from "bullmq";
 import IORedis from "ioredis";
 
 const connection = new IORedis({
@@ -7,22 +7,7 @@ const connection = new IORedis({
   maxRetriesPerRequest: null,
 });
 
-const worker = new Worker(
-  "sms-queue",
-  async (job) => {
-    console.log("Processing job:", job.id);
-    console.log("Sending SMS to:", job.data.phone);
-    console.log("Message:", job.data.message);
 
-    // Simulate delay (like real SMS API call)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    console.log("SMS sent successfully ✅");
-  },
-  {
-    connection,
-    concurrency: 5,
-  }
-);
-
-console.log("Worker started...");
+export const smsQueue = new Queue("sms-queue", {
+  connection,
+})
